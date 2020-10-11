@@ -1,0 +1,7 @@
+{
+  "name": "rpg-character-catalog",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
