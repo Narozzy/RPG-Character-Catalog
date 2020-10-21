@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "rpg-character-catalog"
+  },
+  "targets": {
+    "rpg-character-catalog": {
+      "hosting": {
+        "app": [
+          "rpg-character-catalog"
+        ]
+      }
+    }
+  }
+}

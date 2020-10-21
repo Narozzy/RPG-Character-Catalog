@@ -1,0 +1,9 @@
+<!-- <ion-list cdkDropList [cdkDropListData]="currentGroup" (cdkDragEntered)="npcDropped($event)">
+  <ion-item-group *ngFor="let groupMember of currentGroup | keyvalue">
+    <character-card [npc]="groupMember.value"></character-card>
+  </ion-item-group>
+</ion-list> -->
+
+<div class="box" *ngFor="let npc of currentGroup" cdkDropList #partyNPCs="cdkDropList" [cdkDropListConnectedTo]="[dropListConnection]">
+  <character-card [npc]="npc"></character-card>
+</div>

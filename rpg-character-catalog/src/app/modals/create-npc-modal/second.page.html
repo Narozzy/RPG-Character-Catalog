@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Create NPC</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div [formGroup]="formGroups">
+    <form formGroupName="npcFormGroup">
+      <ion-item>
+        <ion-label><strong>Name:</strong></ion-label>
+        <ion-input type="text" name="name" formControlName="name" [(ngModel)]="this.npc.name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label><strong>Level: ({{this.npc.level}})</strong></ion-label>
+        <ion-range color="primary" min="1" max="20" formControlName="level" [(ngModel)]="this.npc.level"></ion-range>
+      </ion-item>
+      <ion-item>
+        <ion-label><strong>Armor Class: ({{this.npc.armorClass}})</strong></ion-label>
+        <ion-range color="primary" min="1" max="40" formControlName="armorClass" [(ngModel)]="this.npc.armorClass"></ion-range>
+      </ion-item>
+      <ion-item>
+        <ion-label><strong>Description:</strong></ion-label>
+        <ion-textarea formControlName="description" [(ngModel)]="this.npc.description" placeholder="Some backstory maybe?..." autoGrow="true"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label><strong>Public:</strong></ion-label>
+        <ion-checkbox formControlName="public" [(ngModel)]="this.npc.public" color="primary"></ion-checkbox>
+      </ion-item>
+    </form>
+  </div>  
+</ion-content>

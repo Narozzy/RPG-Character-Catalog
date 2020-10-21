@@ -1,0 +1,11 @@
+<ion-card cdkDrag [color]="this.determineStyle()" class="card">
+  <ion-card-header>
+    <ion-card-title>{{npc.name}}</ion-card-title>
+    <ion-card-subtitle>Level: {{npc.level}}</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-label>Public:</ion-label>
+    <ion-checkbox color="primary" slot="end" [checked]="npc.public" (click)="updatePublicStatus($event)"></ion-checkbox>
+  </ion-card-content>
+</ion-card>
