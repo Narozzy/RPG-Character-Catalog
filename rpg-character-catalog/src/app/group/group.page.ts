@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Output, EventEmitter, Input, OnInit } from "@angular/core";
+import { Component, Output, EventEmitter, Input } from "@angular/core";
 import { NPC } from '../../../models/npc';
 
 @Component({
@@ -7,19 +7,12 @@ import { NPC } from '../../../models/npc';
   templateUrl: './group.page.html',
   styleUrls: ['./group.page.scss']
 })
-export class GroupComponent implements OnInit {
-  @Input()
-  dropListConnection;
-
+export class GroupComponent {
   @Output()
   groupModificationEvent = new EventEmitter<NPC[]>();
 
   @Input()
   currentGroup: NPC[];
-
-  ngOnInit() {
-    console.dir(this.dropListConnection);
-  }
 
   npcDropped(event: CdkDragDrop<NPC[]>) {
     console.log(event);

@@ -1,4 +1,15 @@
-.scroll {
-  overflow: hidden;
-  display: inline-flex;
+.scroll-horizontal:hover {
+  scroll-behavior: smooth;
+}
+
+.drag-bounding-box {
+  height: 500px;
+  width: 500px;
+  border: 3px dotted white;
+}
+
+.box {
+  width: 100%;
+  height: 400px;
+  border: 3px dotted white;
 }

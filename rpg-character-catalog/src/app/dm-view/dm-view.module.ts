@@ -14,7 +14,7 @@ import { GroupModule } from '../group/group.module';
     SecondPageModule,
     CharacterCardModule,
     DragDropModule,
-    GroupModule,
+    GroupModule
   ],
   declarations: [DmViewComponent],
   exports: [DmViewComponent]

@@ -1,5 +1,3 @@
-<ion-segment scrollable="true"  #partyNPCs="cdkDropList" cdkDropList [cdkDropListConnectedTo]="dropListConnection">
-  <div *ngFor="let npc of currentGroup">
-    <character-card [npc]="npc"></character-card>
-  </div>
-</ion-segment>
+<div *ngFor="let npc of currentGroup">
+  <character-card [npc]="npc"></character-card>
+</div>
