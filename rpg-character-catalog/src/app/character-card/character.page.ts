@@ -25,6 +25,7 @@ export class CharacterCardComponent implements OnInit {
 
   updatePublicStatus(event) {
     console.log(event);
+    console.log(`this.npc.npcID: ${this.npc.npcID}`);
     this.npc.public = !this.npc.public;
     this.db.object(`npcs/${this.npc.npcID}`).update(this.npc);
   }
