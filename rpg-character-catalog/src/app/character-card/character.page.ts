@@ -10,13 +10,15 @@ import { NPC } from '../../../models/npc';
 export class CharacterCardComponent implements OnInit {
   @Input()
   npc: NPC
+  @Input()
+  srcList: string;
 
   constructor(
     private db: AngularFireDatabase
   ) {}
 
   ngOnInit() {
-    console.log(this.npc);
+    
   }
 
   determineStyle() {
@@ -24,10 +26,13 @@ export class CharacterCardComponent implements OnInit {
   }
 
   updatePublicStatus(event) {
-    console.log(event);
-    console.log(`this.npc.npcID: ${this.npc.npcID}`);
     this.npc.public = !this.npc.public;
-    this.db.object(`npcs/${this.npc.npcID}`).update(this.npc);
+    this.db.object(`${this.srcList}/${this.npc.npcID}`).update(this.npc);
+  }
+
+  deleteCharacter(event) {
+    console.log(event);
+    this.db.object(`${this.srcList}/${this.npc.npcID}`).remove();
   }
 
   dragEnded(event) {
