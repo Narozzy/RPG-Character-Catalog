@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { CreateNpcModal } from '../modals/create-npc-modal/second.page';
 import { NPC } from '../../../models/npc';
@@ -21,7 +21,8 @@ export class DmViewComponent {
 
   constructor(
     private modalController: ModalController,
-    private db: AngularFireDatabase
+    private db: AngularFireDatabase,
+    private elemRef: ElementRef
   ) {
     this.npcDatabase = this.db.list<NPC>('/npcs')
       .snapshotChanges()
@@ -59,28 +60,6 @@ export class DmViewComponent {
     return await modal.present();
   }
 
-  // private async grabUpdate() {
-  //   this.npcDatabase.subscribe((newNpcs: Map<string, NPC>) => {
-  //     console.log(JSON.stringify(newNpcs));
-  //     for (const updatedNpcId in newNpcs) {
-  //       if (!(this.npcs.filter(npc => npc.npcID === newNpcs[updatedNpcId].npcID).length > 0 ||
-  //         this.currentGroup.filter(npc => npc.npcID === newNpcs[updatedNpcId].npcID).length > 0)) {
-  //         let o = new NPC(newNpcs[updatedNpcId]);
-  //         o.npcID = updatedNpcId;
-  //         this.npcs.push(o);
-  //       }
-  //     }
-
-  //     this.currentGroup = Object.entries(newNpcs).filter(
-  //       npcEntry => !(this.npcs.includes(npcEntry[1].npcID))
-  //     ).map(npcEntry => {
-  //       const o = new NPC(npcEntry[1]);
-  //       o.npcID = npcEntry[0];
-  //       return o;
-  //     });
-  //   });
-  // }
-
   organizeNpcs(event: CdkDragDrop<NPC[]>) {
     console.log(event);
     if (event.container.id === event.previousContainer.id) {
@@ -91,6 +70,15 @@ export class DmViewComponent {
       const destination = event.container.id === 'cdk-drop-list-0' ? 'npcs/' : 'groups/';
       this.db.list(`${source}${event.item.data.npcID}`).remove();
       this.db.list(`${destination}`).push(event.item.data);
+    }
+  }
+
+  determineBoxStyling(collection: string) {
+    const isCollectionEmpty = collection === 'npcs' ? this.elemRef.nativeElement.querySelectorAll('div')[0]?.childNodes.length === 0 : this.elemRef.nativeElement.querySelectorAll('div')[1]?.childNodes.length === 0;
+    if (isCollectionEmpty) {
+      return 'emptyBox';
+    } else {
+      return 'box';
     }
   }
 

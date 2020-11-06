@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'second',
     loadChildren: () => import('./modals/create-npc-modal/second.module').then( m => m.SecondPageModule)
+  },
+  {
+    path: 'spell-list-modal',
+    loadChildren: () => import('./modals/spell-list-modal/spell-list-modal.module').then( m => m.SpellListModalPageModule)
   }
 ];
 @NgModule({
