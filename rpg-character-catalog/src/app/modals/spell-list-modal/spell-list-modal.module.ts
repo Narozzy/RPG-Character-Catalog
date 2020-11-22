@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { SpellListModalPageRoutingModule } from './spell-list-modal-routing.module';
 
 import { SpellListModalPage } from './spell-list-modal.page';
+import { SpellCardModule } from '../../spell-card/spell-card.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SpellListModalPageRoutingModule
+    SpellListModalPageRoutingModule,
+    SpellCardModule
   ],
   declarations: [SpellListModalPage]
 })

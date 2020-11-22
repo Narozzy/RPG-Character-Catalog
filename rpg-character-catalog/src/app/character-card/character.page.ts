@@ -76,13 +76,15 @@ export class CharacterCardComponent implements AfterViewInit {
     const modal = await this.modalController.create({
       component: SpellListModalPage,
       componentProps: {
-        characterName: this.npc.name
+        characterName: this.npc.name,
+        character: this.npc
       },
       backdropDismiss: false
     });
 
     modal.onDidDismiss().then(data => {
-      console.log(JSON.stringify(data));
+      this.npc.spells = data.data.data;
+      this.db.object(`${this.srcList}/${this.npc.npcID}`).update(this.npc);
     });
     return await modal.present();
   }

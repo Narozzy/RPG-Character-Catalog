@@ -11,6 +11,39 @@
 
 <ion-content>
   <ion-toolbar>
-    <ion-searchbar animated placeholder="Search for a spell"></ion-searchbar>
+    <ion-searchbar animated placeholder="Search for a spell" autocomplete="name" (ionInput)="filterList($event)" mode="md">
+    </ion-searchbar>
   </ion-toolbar>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-label><strong>Selected</strong></ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label><strong>Name</strong></ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label><strong>Level</strong></ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-label><strong>School</strong></ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let spell of spellList">
+      <ion-item-divider>
+        <ion-col>
+          <ion-checkbox [checked]="spellSelected(spell)" (ionChange)="changeSelectedSpells($event, spell)"></ion-checkbox>
+        </ion-col>
+        <ion-col>
+          <ion-label name="spellName">{{spell.name}}</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label [innerHTML]="spell.level === 'cantrip' ? '0' : spell.level"></ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label>{{spell.school}}</ion-label>
+        </ion-col>
+      </ion-item-divider>
+    </ion-row>
+  </ion-grid>
 </ion-content>
