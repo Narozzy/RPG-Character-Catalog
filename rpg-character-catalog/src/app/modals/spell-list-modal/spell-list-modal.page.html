@@ -32,7 +32,7 @@
     <ion-row *ngFor="let spell of spellList">
       <ion-item-divider>
         <ion-col>
-          <ion-checkbox [checked]="spellSelected(spell)" (ionChange)="changeSelectedSpells($event, spell)"></ion-checkbox>
+          <ion-checkbox name="selected" [checked]="spellSelected(spell)" (ionChange)="changeSelectedSpells($event, spell)"></ion-checkbox>
         </ion-col>
         <ion-col>
           <ion-label name="spellName">{{spell.name}}</ion-label>
@@ -47,3 +47,9 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-buttons>
+    <ion-button (click)="filterSelected()">Only Selected?</ion-button>
+  </ion-buttons>
+</ion-footer>

@@ -57,4 +57,15 @@ export class SpellListModalPage implements OnInit {
   }
 
   public spellSelected = (spell: Spell) => this.selectedSpells.map(selectedSpell => selectedSpell.name).includes(spell.name);
+
+  public filterSelected() {
+    const items = Array.from(document.querySelectorAll('ion-checkbox[name="selected"]')) as HTMLIonCheckboxElement[];
+    this.rowGridStyle = this.rowGridStyle ?? items.filter((item) => item.parentElement.parentElement.parentElement.style.display !== 'none')[0].style.display;
+    requestAnimationFrame(() => {
+      items.forEach(item => {
+        const shouldShow = item.checked;
+        item.parentElement.parentElement.style.display = shouldShow ? this.rowGridStyle : 'none';
+      });
+    });
+  }
 }

@@ -20,6 +20,14 @@ const routes: Routes = [
         loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
       },
       {
+        path: 'authentication',
+        loadChildren: () => import('../signin/signin.module').then(m => m.SigninPageModule)
+      },
+      {
+        path: 'sign-up',
+        loadChildren: () => import('../signup/signup.module').then(m => m.SignupPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/dm-view',
         pathMatch: 'full'
@@ -28,7 +36,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/tabs/dm-view',
+    redirectTo: '/tabs/authentication',
     pathMatch: 'full'
   }
 ];
