@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router } from "@angular/router";
 import { AuthenticationService } from "./authentication.service";
+import decode, { JwtPayload } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,9 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
-    const expectedRole = route.data.expectedRole;
-    const user = localStorage.getItem("user");
-    console.log(`USER FROM AUTHGUARD: ${user}`);
-    console.log(`EXPECTED ROLE FROM AUTH GUARD: ${expectedRole}`);
-    if (!this.auth.isAuthenticated) {
+    const accessToken = JSON.parse(localStorage.getItem("user")).stsTokenManager.accessToken;
+    console.log(`decoded token: ${JSON.stringify(decode(accessToken))}`);
+    if (!this.auth.isAuthenticated || new Date().getTime() >= (decode(accessToken) as JwtPayload).exp * 1000) {
       this.router.navigate(["tabs/authentication"]);
       return false;
     }
