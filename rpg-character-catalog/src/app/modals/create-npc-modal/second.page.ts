@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { NPC } from '../../../../models/npc';
@@ -30,11 +30,11 @@ export class CreateNpcModal implements OnInit {
   });
   constructor(private modalController: ModalController) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.npc = new NPC({});
   }
 
-  async closeModal() {
+  async closeModal(): Promise<void> {
     await this.modalController.dismiss({
       npc: this.npc
     });

@@ -39,7 +39,7 @@ export class DmViewComponent {
     return object;
   }
 
-  async openModal() {
+  async openModal(): Promise<void> {
     const modal = await this.modalController.create({
       component: CreateNpcModal,
       componentProps: this.newNPC,
@@ -54,14 +54,14 @@ export class DmViewComponent {
         this.db.list('npcs').push(data.data.npc);
       }
     });
-    return await modal.present();
+    return modal.present();
   }
 
-  organizeNpcs(event: CdkDragDrop<NPC[]>) {
+  organizeNpcs(event: CdkDragDrop<NPC[]>): void {
     console.log(event);
     const source = event.previousContainer.id === 'cdk-drop-list-0' ? 'npcs/' : 'groups/';
     if (event.container.id === event.previousContainer.id) {
-      
+      // Hello
     } else {
       const destination = event.container.id === 'cdk-drop-list-0' ? 'npcs/' : 'groups/';
       this.db.list(`${source}${event.item.data.npcID}`).remove();
@@ -69,7 +69,7 @@ export class DmViewComponent {
     }
   }
 
-  determineBoxStyling(collection: string) {
+  determineBoxStyling(collection: string): string {
     const isCollectionEmpty = collection === 'npcs' ? this.elemRef.nativeElement.querySelectorAll('div')[0]?.childNodes.length === 0 : this.elemRef.nativeElement.querySelectorAll('div')[1]?.childNodes.length === 0;
     if (isCollectionEmpty) {
       return 'emptyBox';
@@ -78,7 +78,7 @@ export class DmViewComponent {
     }
   }
 
-  handleScrollWheel(event) {
+  handleScrollWheel(event: any): void {
     const npcScrollList = document.getElementsByTagName('ion-segment')[0];
     if (event.path.includes(npcScrollList) && event.deltaY > 0) {
       npcScrollList.scrollLeft += 75;

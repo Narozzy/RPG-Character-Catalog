@@ -26,6 +26,7 @@ npm-debug.log*
 /coverage
 /dist
 /rpg-character-catalog/node_modules
+/node_modules
 /platforms
 /plugins
 /rpg-character-catalog/www

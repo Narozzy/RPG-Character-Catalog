@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ModalController } from '@ionic/angular';
-import { map } from 'rxjs/operators';
 import { NPC } from '../../../../models/npc';
 import { Spell } from '../../../../models/spell';
 
@@ -26,17 +25,17 @@ export class SpellListModalPage implements OnInit {
     this.firestore.collection<Spell>('spells', ref => ref.orderBy('level', 'asc')).valueChanges().subscribe(o => this.spellList = o);
    }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.selectedSpells = Array.from(Object.values(this.character.spells)) ?? [];
   }
 
-  async closeModal() {
+  async closeModal(): Promise<void> {
     await this.modalController.dismiss({
       data: this.selectedSpells
     });
   }
 
-  filterList(event) {
+  filterList(event: any): void {
     const items = Array.from(document.querySelectorAll('ion-label[name="spellName"]')) as HTMLElement[];
     this.rowGridStyle = this.rowGridStyle ?? items.filter((item) => item.parentElement.parentElement.style.display !== 'none')[0].style.display;
     const query = event.target.value.toLowerCase();
@@ -48,17 +47,7 @@ export class SpellListModalPage implements OnInit {
     });
   }
 
-  changeSelectedSpells(event, spell: Spell) {
-    if (event.detail.checked) {
-      this.selectedSpells.push(spell);
-    } else {
-      this.selectedSpells.filter((selectedSpell) => selectedSpell.name !== spell.name);
-    }
-  }
-
-  public spellSelected = (spell: Spell) => this.selectedSpells.map(selectedSpell => selectedSpell.name).includes(spell.name);
-
-  public filterSelected() {
+  public filterSelected(): void {
     const items = Array.from(document.querySelectorAll('ion-checkbox[name="selected"]')) as HTMLIonCheckboxElement[];
     this.rowGridStyle = this.rowGridStyle ?? items.filter((item) => item.parentElement.parentElement.parentElement.style.display !== 'none')[0].style.display;
     requestAnimationFrame(() => {
@@ -68,4 +57,14 @@ export class SpellListModalPage implements OnInit {
       });
     });
   }
+
+  changeSelectedSpells(event: any, spell: Spell): void {
+    if (event.detail.checked) {
+      this.selectedSpells.push(spell);
+    } else {
+      this.selectedSpells.filter((selectedSpell) => selectedSpell.name !== spell.name);
+    }
+  }
+
+  public spellSelected = (spell: Spell): boolean => this.selectedSpells.map(selectedSpell => selectedSpell.name).includes(spell.name);
 }

@@ -17,8 +17,8 @@ export class CharacterCardComponent implements AfterViewInit {
 
   @ViewChild(IonCard) cardElem: ElementRef<IonCard>;
 
-  private lastOnStart: number = 0;
-  private DOUBLE_CLICK_THRESHOLD: number = 500;
+  private lastOnStart = 0;
+  private DOUBLE_CLICK_THRESHOLD = 500;
 
   constructor(
     private db: AngularFireDatabase,
