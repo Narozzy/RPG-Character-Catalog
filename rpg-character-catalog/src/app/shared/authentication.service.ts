@@ -37,6 +37,7 @@ export class AuthenticationService {
 
   // Sign in with email/password
   SignIn(email, password) {
+    console.log(email, password);
     return this.afAuth.signInWithEmailAndPassword(email, password)
       .then(() => {
         this.isAuthenticated = true;
