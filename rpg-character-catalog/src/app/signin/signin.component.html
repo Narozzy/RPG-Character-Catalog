@@ -14,3 +14,30 @@
     <a (click)="signUp()">Create an Account?</a>
   </div>
 </div>
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Sign In
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card class="authBlock">
+    <ion-card-header>
+      <h3>Sign In</h3>
+    </ion-card-header>
+    <div class="formGroup">
+      <ion-input type="text" class="formControl" placeholder="Username" #email required></ion-input>
+    </div>
+    <div class="formGroup">
+      <ion-input type="password" class="formControl" placeholder="Password" #password required></ion-input>
+    </div>
+    <!-- Calling SignIn Api from AuthenticationService -->
+    <div class="formGroup">
+      <ion-button type="button" class="btn btnPrimary" (click)="authenticationService.SignIn(email.value, password.value)">Log In</ion-button>
+      <a (click)="signUp()">Create an Account?</a>
+    </div>
+  </ion-card>
+</ion-content>
