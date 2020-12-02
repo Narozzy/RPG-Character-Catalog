@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from "@angular/core";
 import { AngularFireDatabase } from '@angular/fire/database';
 import { GestureController, IonCard, ModalController } from '@ionic/angular';
+import { UserInfo } from 'firebase';
 import { NPC } from '../../../models/npc';
 import { SpellListModalPage } from '../modals/spell-list-modal/spell-list-modal.page';
 
@@ -14,6 +15,8 @@ export class CharacterCardComponent implements AfterViewInit {
   npc: NPC
   @Input()
   srcList: string;
+  @Input()
+  currentUser: UserInfo;
 
   @ViewChild(IonCard) cardElem: ElementRef<IonCard>;
 
@@ -23,7 +26,7 @@ export class CharacterCardComponent implements AfterViewInit {
   constructor(
     private db: AngularFireDatabase,
     private modalController: ModalController,
-    private gestureCtrl: GestureController
+    private gestureCtrl: GestureController,
   ) {}
 
   ngAfterViewInit(): void {
@@ -49,12 +52,12 @@ export class CharacterCardComponent implements AfterViewInit {
 
   updatePublicStatus(event) {
     this.npc.public = !this.npc.public;
-    this.db.object(`${this.srcList}/${this.npc.npcID}`).update(this.npc);
+    this.db.object(`${this.currentUser.uid}/${this.srcList}/${this.npc.npcID}`).update(this.npc);
   }
 
   deleteCharacter(event) {
     console.log(event);
-    this.db.object(`${this.srcList}/${this.npc.npcID}`).remove();
+    this.db.object(`${this.currentUser.uid}/${this.srcList}/${this.npc.npcID}`).remove();
   }
 
   dragEnded(event) {
@@ -84,7 +87,7 @@ export class CharacterCardComponent implements AfterViewInit {
 
     modal.onDidDismiss().then(data => {
       this.npc.spells = data.data.data;
-      this.db.object(`${this.srcList}/${this.npc.npcID}`).update(this.npc);
+      this.db.object(`${this.currentUser.uid}/${this.srcList}/${this.npc.npcID}`).update(this.npc);
     });
     return await modal.present();
   }

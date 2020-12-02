@@ -23,7 +23,7 @@
     </ion-list-header>
     <ion-segment [ngClass]="this.determineBoxStyling('npcs')" #availableNPCs="cdkDropList" scrollable="true" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListConnectedTo]="activeGroupList" (cdkDropListDropped)="organizeNpcs($event)" (wheel)="handleScrollWheel($event)">
       <div id="availableCharacterList" *ngFor="let npc of this.npcDatabase | async | keyvalue">
-        <character-card [npc]="npc.value" [srcList]="'npcs'"></character-card>
+        <character-card [npc]="npc.value" [srcList]="'npcs'" [currentUser]="currentUserInfo"></character-card>
       </div>
     </ion-segment>
   </ion-row>
@@ -31,9 +31,9 @@
     <ion-list-header>
       <ion-label>Current Group</ion-label>
     </ion-list-header>
-    <ion-segment [ngClass]="this.determineBoxStyling('currentGroup')" #activeGroupList="cdkDropList" scrollable="true" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListConnectedTo]="availableNPCs" (cdkDropListDropped)="organizeNpcs($event)" (wheel)="handleScrollWheel($event)">
+    <ion-segment [ngClass]="this.determineBoxStyling('currentGroup')" class="emptyBox" #activeGroupList="cdkDropList" scrollable="true" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListConnectedTo]="availableNPCs" (cdkDropListDropped)="organizeNpcs($event)" (wheel)="handleScrollWheel($event)">
       <div id="currentGroupList" *ngFor="let npc of this.groupDatabase | async | keyvalue">
-        <character-card [npc]="npc.value" [srcList]="'groups'"></character-card>
+        <character-card [npc]="npc.value" [srcList]="'groups'" [currentUser]="currentUserInfo"></character-card>
       </div>
     </ion-segment>
   </ion-row>

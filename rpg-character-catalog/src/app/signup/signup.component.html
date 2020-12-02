@@ -1,13 +1,17 @@
-<div class="authBlock">
-  <h3>Sign Up</h3>
-  <div class="formGroup">
-    <input type="text" class="formControl" placeholder="Username" #userEmail required>
-  </div>
-  <div class="formGroup">
-    <input type="password" class="formControl" placeholder="Password" #userPassword required>
-  </div>
-  <!-- Calling SignIn Api from AuthenticationService -->
-  <div class="formGroup">
-    <input type="button" class="btn btnPrimary" value="Sign Up" (click)="authenticationService.SignUp(userEmail.value, userPassword.value)">
-  </div>
-</div>
+<ion-content [fullscreen]="true">
+  <ion-card class="authBlock">
+    <ion-card-header>
+      <h3>Sign Up</h3>
+    </ion-card-header>
+    <div class="formGroup">
+      <ion-input type="text" class="formControl" placeholder="Username" #email required></ion-input>
+    </div>
+    <div class="formGroup">
+      <ion-input type="password" class="formControl" placeholder="Password" #password required></ion-input>
+    </div>
+    <!-- Calling SignIn Api from AuthenticationService -->
+    <div class="formGroup">
+      <ion-button size="small" type="submit" (click)="authenticationService.SignUp(email.value, password.value)">Create Account</ion-button>
+    </div>
+  </ion-card>
+</ion-content>

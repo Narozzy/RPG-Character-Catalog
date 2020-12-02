@@ -5,6 +5,8 @@ import { NPC } from '../../../models/npc';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { map } from 'rxjs/operators';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { UserInfo } from 'firebase';
 
 @Component({
   selector: 'dm-view',
@@ -15,22 +17,28 @@ export class DmViewComponent {
   private newNPC: NPC
   public npcDatabase;
   public groupDatabase;
+  public currentUserInfo: UserInfo;
 
   constructor(
     private modalController: ModalController,
     private db: AngularFireDatabase,
-    private elemRef: ElementRef
+    private elemRef: ElementRef,
+    private readonly firebaseAuth: AngularFireAuth
   ) {
-    this.npcDatabase = this.db.list<NPC>('/npcs', ref => ref.orderByChild('position'))
-      .snapshotChanges()
-      .pipe(map(npcs => 
-         npcs.map(npc => this.documentToDomainObject(npc))
-      ));
-    this.groupDatabase = this.db.list<NPC>('/groups')
-      .snapshotChanges()
-      .pipe(map(npcs =>
-        npcs.map(npc => this.documentToDomainObject(npc))
-      ));
+    this.firebaseAuth.authState.subscribe(authState => {
+      this.currentUserInfo = authState;
+
+      this.npcDatabase = this.db.list<NPC>(`${this.currentUserInfo.uid}/npcs`, ref => ref.orderByChild('position'))
+        .snapshotChanges()
+        .pipe(map(npcs => 
+          npcs.map(npc => this.documentToDomainObject(npc))
+        ));
+      this.groupDatabase = this.db.list<NPC>(`${this.currentUserInfo.uid}/groups`)
+        .snapshotChanges()
+        .pipe(map(npcs =>
+          npcs.map(npc => this.documentToDomainObject(npc))
+        ));
+    });
   }
 
   private documentToDomainObject = _ => {
@@ -50,8 +58,8 @@ export class DmViewComponent {
       console.log(JSON.stringify(data));
       console.dir(this.npcDatabase);
       if (data) {
-        data.data.npc.position = document.getElementById('availableCharacterList').parentElement.children.length + 1;
-        this.db.list('npcs').push(data.data.npc);
+        data.data.npc.position = document.getElementById('availableCharacterList')?.parentElement.children.length + 1 || 1;
+        this.db.list(`${this.currentUserInfo.uid}/npcs`).push(data.data.npc);
       }
     });
     return modal.present();

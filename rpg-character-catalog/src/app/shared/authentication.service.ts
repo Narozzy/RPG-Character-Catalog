@@ -27,9 +27,8 @@ export class AuthenticationService {
   // Sign up with email/password
   SignUp(email, password) {
     return this.afAuth.createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        console.log(result.user);
-        this.router.navigate(['tabs/']);
+      .then(() => {
+        this.router.navigate(['/tabs']);
       }).catch((error) => {
         window.alert(error.message)
       })
@@ -37,7 +36,6 @@ export class AuthenticationService {
 
   // Sign in with email/password
   SignIn(email, password) {
-    console.log(email, password);
     return this.afAuth.signInWithEmailAndPassword(email, password)
       .then(() => {
         this.isAuthenticated = true;
